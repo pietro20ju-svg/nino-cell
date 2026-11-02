@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Nino Cell, oficina de reparos de celulares e venda de acessórios em Tietê/SP.">
+<title>Nino Cell</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: página única, tudo centralizado. Faixas brancas e rosadas, contato em vermelho cheio.
+   O momento forte é a animação do reparo; o resto fica quieto. */
+:root {
+  --bg: #f1ecea;
+  --soft: #f8e3e1;
+  --paper: #faf6f5;
+  --ink: #2a1214;
+  --muted: #6a5153;
+  --red: #d8182b;
+  --red-deep: #a30f1f;
+  --red-tint: #fde6e5;
+  --line: #e4ccc9;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 1rem/1.6 var(--font-body);
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.08; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--red-deep); outline-offset: 3px; border-radius: 6px; }
+
+.wrap {
+  width: min(100%, 1000px);
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.band { padding-block: 60px; }
+.band-soft { background: var(--soft); }
+.band-red { background: var(--red); color: #fff; }
+.label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.band-red .label { color: #fff; opacity: 0.9; }
+.h2 { font-size: clamp(1.7rem, 4.4vw, 2.3rem); font-weight: 800; margin-top: 8px; }
+.sub { color: var(--muted); max-width: 52ch; margin: 12px auto 0; text-wrap: pretty; }
+
+/* Topo */
+.top { padding-block: 18px 14px; border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand-name { font: 800 1.6rem/1 var(--font-display); letter-spacing: -0.01em; }
+.brand-name span { color: var(--red); }
+.nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px; }
+.nav a { font-size: 0.92rem; font-weight: 600; color: var(--muted); text-decoration: none; padding: 4px 2px; }
+.nav a:hover { color: var(--red); }
+
+/* Hero */
+.hero { padding-block: 44px 64px; position: relative; overflow: clip; isolation: isolate; }
+.hero h1 { font-size: clamp(2.1rem, 7vw, 3.6rem); font-weight: 800; margin-top: 10px; letter-spacing: -0.02em; }
+.lead { color: var(--muted); font-size: 1.08rem; max-width: 54ch; margin: 16px auto 0; text-wrap: pretty; }
+
+.stage {
+  width: min(100%, 380px);
+  margin: 30px auto 0;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  overflow: hidden;
+}
+.stage svg { display: block; width: 100%; height: auto; max-width: 100%; }
+.caption {
+  display: grid;
+  place-items: center;
+  padding: 0 16px 20px;
+  font: 700 1.05rem/1.3 var(--font-display);
+  color: var(--red-deep);
+}
+.caption span { grid-area: 1 / 1; opacity: 0; }
+
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 30px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 24px;
+  border-radius: 12px;
+  border: 2px solid var(--red);
+  font: 700 1rem/1.2 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, transform 0.15s;
+}
+.btn svg { width: 20px; height: 20px; flex: none; }
+.btn-main { background: var(--red); color: #fff; }
+.btn-main:hover { background: var(--red-deep); border-color: var(--red-deep); }
+.btn-line { background: var(--paper); color: var(--red); }
+.btn-line:hover { background: var(--red-tint); }
+.btn:active { transform: translateY(1px); }
+
+/* Serviços */
+.cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 34px; }
+@media (min-width: 900px) { .cards { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 420px) { .cards { grid-template-columns: 1fr; } }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 26px 18px; min-width: 0; }
+.ico {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: var(--red-tint);
+  color: var(--red);
+}
+.ico svg { width: 28px; height: 28px; }
+.card h3 { font-size: 1.15rem; font-weight: 700; }
+.card p { margin-top: 8px; color: var(--muted); font-size: 0.95rem; text-wrap: pretty; }
+.nota { margin-top: 26px; color: var(--muted); }
+.nota a { color: var(--red); font-weight: 700; }
+
+/* Acessórios */
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 28px; }
+.chip {
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  font-weight: 600;
+}
+
+/* Contato */
+.ficha {
+  width: min(100%, 560px);
+  margin: 30px auto 0;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 20px;
+  padding: 10px 22px 26px;
+}
+.linha { padding: 18px 0; border-top: 1px solid var(--line); min-width: 0; }
+.linha:first-child { border-top: 0; }
+.linha .label { display: block; margin-bottom: 4px; color: var(--muted); }
+.valor { font-weight: 600; font-size: 1.08rem; overflow-wrap: anywhere; text-wrap: balance; }
+.valor a { color: var(--red); text-decoration: none; }
+.valor a:hover { text-decoration: underline; }
+.copiar {
+  margin-top: 10px;
+  padding: 7px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--red-deep);
+  font: 700 0.85rem/1.2 var(--font-body);
+  cursor: pointer;
+}
+.copiar:hover { background: var(--red-tint); }
+.ficha .actions { margin-top: 12px; }
+
+.foot { padding-block: 26px; color: var(--muted); font-size: 0.88rem; }
+
+/* Vida: entrada, flutuação e movimento ambiente */
+@keyframes enter { from { opacity: 0.4; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.enter { animation: enter 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 0.12s); }
+@keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+.stage { animation: enter 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.36s both, bob 6s ease-in-out 1.1s infinite; }
+
+.hero > .wrap { position: relative; z-index: 1; }
+.hero::before, .hero::after { content: ""; position: absolute; z-index: 0; border-radius: 50%; pointer-events: none; }
+.hero::before {
+  width: 520px; height: 520px; top: -200px; left: -140px;
+  background: radial-gradient(circle, rgba(216, 24, 43, 0.16), rgba(216, 24, 43, 0) 68%);
+  animation: blob 14s ease-in-out infinite alternate;
+}
+.hero::after {
+  width: 620px; height: 620px; bottom: -260px; right: -180px;
+  background: radial-gradient(circle, rgba(216, 24, 43, 0.12), rgba(216, 24, 43, 0) 68%);
+  animation: blob 18s ease-in-out infinite alternate-reverse;
+}
+@keyframes blob { from { transform: translate(0, 0) scale(1); } to { transform: translate(60px, 40px) scale(1.15); } }
+
+.mark {
+  color: var(--red);
+  padding-inline: 4px;
+  background: linear-gradient(transparent 64%, #fbc4c0 64%) no-repeat 0 0 / 0% 100%;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  animation: mark 0.9s 0.9s ease-out forwards;
+}
+@keyframes mark { to { background-size: 100% 100%; } }
+
+.floats { display: none; }
+@media (min-width: 1100px) { .floats { display: block; position: absolute; inset: 0; pointer-events: none; z-index: 0; } }
+.fl {
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--red);
+  box-shadow: 0 10px 24px rgba(216, 24, 43, 0.14);
+  animation: drift 6s ease-in-out infinite;
+}
+.fl svg { width: 28px; height: 28px; }
+.fl:nth-child(1) { top: 90px; left: 7%; }
+.fl:nth-child(2) { top: 270px; left: 15%; animation-duration: 7.5s; animation-delay: -2s; }
+.fl:nth-child(3) { top: 470px; left: 8%; animation-duration: 5.5s; animation-delay: -1s; }
+.fl:nth-child(4) { top: 120px; right: 8%; animation-duration: 7s; animation-delay: -3s; }
+.fl:nth-child(5) { top: 320px; right: 14%; animation-duration: 6.5s; animation-delay: -4s; }
+.fl:nth-child(6) { top: 500px; right: 7%; animation-duration: 8s; animation-delay: -2.5s; }
+@keyframes drift {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-16px) rotate(5deg); }
+}
+
+.hero .btn-main { animation: ring 2.4s ease-out infinite; }
+@keyframes ring {
+  0% { box-shadow: 0 0 0 0 rgba(216, 24, 43, 0.45); }
+  70%, 100% { box-shadow: 0 0 0 16px rgba(216, 24, 43, 0); }
+}
+
+.ticker { background: var(--red); color: #fff; overflow: hidden; white-space: nowrap; padding-block: 14px; }
+.track { display: inline-flex; animation: marquee 32s linear infinite; }
+.ticker:hover .track { animation-play-state: paused; }
+.grp { display: inline-flex; flex: none; }
+.grp span {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 22px;
+  font: 700 0.85rem/1 var(--font-body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.grp span::after { content: ""; width: 7px; height: 7px; margin-left: 44px; border-radius: 50%; background: rgba(255, 255, 255, 0.55); }
+@keyframes marquee { to { transform: translateX(-25%); } }
+
+.wave {
+  height: 36px;
+  margin-bottom: -1px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 36'%3E%3Cpath d='M0 18 C120 0 240 0 360 18 S600 36 720 18 V36 H0Z' fill='%23d8182b'/%3E%3C/svg%3E") repeat-x;
+  background-size: 720px 36px;
+  animation: waveMove 9s linear infinite;
+}
+@keyframes waveMove { to { background-position-x: -720px; } }
+
+@keyframes rise { from { opacity: 0.5; transform: translateY(22px) scale(0.98); } to { opacity: 1; transform: none; } }
+.in { animation: rise 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; animation-delay: var(--d, 0s); }
+
+.card { transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; }
+.card:hover { transform: translateY(-6px); border-color: #f0b3ae; box-shadow: 0 14px 28px rgba(216, 24, 43, 0.12); }
+.ico { transition: transform 0.3s, background-color 0.3s, color 0.3s; }
+.card:hover .ico { transform: rotate(-10deg) scale(1.1); background: var(--red); color: #fff; }
+.chip { transition: transform 0.2s, background-color 0.2s, color 0.2s, border-color 0.2s; cursor: default; }
+.chip:hover { transform: translateY(-3px) rotate(-2deg); background: var(--red); color: #fff; border-color: var(--red); }
+
+.wa {
+  position: fixed;
+  z-index: 30;
+  right: calc(16px + env(safe-area-inset-right, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 0 0 3px var(--paper),0 8px 20px rgba(163, 15, 31, 0.4);
+  text-decoration: none;
+}
+.wa::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--red); animation: waRing 2.2s ease-out infinite; }
+.wa svg { width: 28px; height: 28px; }
+.wa:hover { background: var(--red-deep); }
+@keyframes waRing { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.7); opacity: 0; } }
+
+.star { transform-box: fill-box; transform-origin: center; transform: scale(0); opacity: 0; animation: star 10s infinite; }
+.star.b { animation-delay: 0.15s; }
+.star.c { animation-delay: 0.3s; }
+.star.d { animation-delay: 0.1s; }
+@keyframes star {
+  0%, 63% { transform: scale(0) rotate(0deg); opacity: 0; }
+  70% { transform: scale(1.3) rotate(25deg); opacity: 1; }
+  78%, 90% { transform: scale(1) rotate(0deg); opacity: 1; }
+  96%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }
+}
+
+/* Animação do reparo (10s em loop) */
+.hand {
+  transform: translate(260px, 300px);
+  filter: drop-shadow(0 5px 6px rgba(0, 0, 0, 0.28));
+  animation: hand 10s ease-in-out infinite;
+}
+@keyframes hand {
+  0%, 10% { transform: translate(260px, 300px); }
+  22% { transform: translate(0, 0); }
+  26% { transform: translate(5px, -3px); }
+  30% { transform: translate(-5px, 3px); }
+  34% { transform: translate(4px, 4px); }
+  38% { transform: translate(-4px, -3px); }
+  42% { transform: translate(5px, 2px); }
+  46% { transform: translate(-5px, -2px); }
+  50% { transform: translate(3px, -4px); }
+  54% { transform: translate(0, 0); }
+  64%, 100% { transform: translate(260px, 300px); }
+}
+.crack { fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1 1; }
+.crack.thin { stroke-width: 1.4; }
+.cracks { filter: drop-shadow(0 0 1.5px rgba(255, 255, 255, 0.55)); }
+.shards { animation: shardFade 10s infinite; }
+@keyframes shardFade {
+  0%, 40% { opacity: 1; }
+  54% { opacity: 0; }
+  95% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.cA { animation: healA 10s infinite; }
+.cB { animation: healB 10s infinite; }
+.cC { animation: healC 10s infinite; }
+@keyframes healA {
+  0%, 36% { stroke-dashoffset: 0; opacity: 1; }
+  46% { stroke-dashoffset: 1; opacity: 1; }
+  46.1%, 95% { stroke-dashoffset: 1; opacity: 0; }
+  95.1% { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes healB {
+  0%, 40% { stroke-dashoffset: 0; opacity: 1; }
+  50% { stroke-dashoffset: 1; opacity: 1; }
+  50.1%, 95% { stroke-dashoffset: 1; opacity: 0; }
+  95.1% { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes healC {
+  0%, 44% { stroke-dashoffset: 0; opacity: 1; }
+  54% { stroke-dashoffset: 1; opacity: 1; }
+  54.1%, 95% { stroke-dashoffset: 1; opacity: 0; }
+  95.1% { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+.spark { transform-box: fill-box; transform-origin: center; opacity: 0; animation: spark 10s infinite; }
+.spark:nth-child(2) { animation-delay: 0.25s; }
+.spark:nth-child(3) { animation-delay: 0.5s; }
+@keyframes spark {
+  0%, 24% { opacity: 0; transform: scale(0.3); }
+  28% { opacity: 1; transform: scale(1); }
+  32% { opacity: 0; transform: scale(1.6); }
+  36% { opacity: 1; transform: scale(1); }
+  40% { opacity: 0; transform: scale(1.6); }
+  44% { opacity: 1; transform: scale(1); }
+  48% { opacity: 0; transform: scale(1.6); }
+  52% { opacity: 1; transform: scale(1); }
+  56%, 100% { opacity: 0; transform: scale(0.3); }
+}
+.shine { transform: translateX(40px); animation: shine 10s ease-in-out infinite; }
+@keyframes shine {
+  0%, 58% { transform: translateX(40px); }
+  70%, 100% { transform: translateX(330px); }
+}
+.ok { transform-box: fill-box; transform-origin: center; transform: scale(0); opacity: 0; animation: pop 10s infinite; }
+@keyframes pop {
+  0%, 62% { transform: scale(0); opacity: 0; }
+  68% { transform: scale(1.15); opacity: 1; }
+  72%, 90% { transform: scale(1); opacity: 1; }
+  96%, 100% { transform: scale(0); opacity: 0; }
+}
+.capA { animation: capA 10s infinite; }
+.capB { animation: capB 10s infinite; }
+.capC { animation: capC 10s infinite; }
+@keyframes capA { 0%, 17% { opacity: 1; } 20%, 96% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes capB { 0%, 17% { opacity: 0; } 20%, 55% { opacity: 1; } 58%, 100% { opacity: 0; } }
+@keyframes capC { 0%, 57% { opacity: 0; } 60%, 93% { opacity: 1; } 96%, 100% { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .enter, .stage, .in { animation: none; }
+  .fl, .hero::before, .hero::after, .hero .btn-main, .track, .wave, .wa::before { animation: none; }
+  .mark { animation: none; background-size: 100% 100%; }
+  .star { animation: none; transform: scale(1); opacity: 1; }
+  .hand, .cracks, .shards { display: none; }
+  .spark, .shine { animation: none; opacity: 0; }
+  .ok { animation: none; transform: none; opacity: 1; }
+  .capA, .capB { animation: none; opacity: 0; }
+  .capC { animation: none; opacity: 1; }
+  .btn { transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio" aria-label="Nino Cell, início">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+        <rect width="34" height="34" rx="9" fill="#d8182b"/>
+        <rect x="11" y="6" width="12" height="22" rx="3" fill="none" stroke="#fff" stroke-width="2"/>
+        <path d="M15 24.5h4" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-name">Nino <span>Cell</span></span>
+    </a>
+    <nav class="nav" aria-label="Seções">
+      <a href="#servicos">Serviços</a>
+      <a href="#acessorios">Acessórios</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="floats" aria-hidden="true">
+      <span class="fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="16" height="10" rx="2.5"/><path d="M21.5 10.5v3"/><path d="M11.5 9.5l-2.5 3h4l-2.5 3"/></svg></span>
+      <span class="fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg></span>
+      <span class="fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2.5v4M15 2.5v4"/><path d="M6 6.5h12v4a6 6 0 0 1-12 0z"/><path d="M12 16.5v5"/></svg></span>
+      <span class="fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/></svg></span>
+      <span class="fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg></span>
+      <span class="fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><circle cx="10" cy="7" r="1.6"/></svg></span>
+    </div>
+    <div class="wrap">
+      <p class="label enter" style="--i:0">Oficina de reparos de celulares</p>
+      <h1 class="enter" style="--i:1">Tela trincada? <span class="mark">A gente conserta.</span></h1>
+      <p class="lead enter" style="--i:2">Troca de tela, bateria, conector de carga e mais. Também vendemos capinhas, películas, carregadores e outros acessórios, no centro de Tietê.</p>
+
+      <div class="stage">
+        <svg viewBox="0 0 420 520" role="img" aria-label="Animação: uma mão com chave de fenda conserta a tela quebrada de um celular desligado">
+          <defs>
+            <linearGradient id="scr" x1="0" y1="0" x2="0.4" y2="1">
+              <stop offset="0" stop-color="#1c1c20"/>
+              <stop offset="1" stop-color="#050506"/>
+            </linearGradient>
+            <linearGradient id="skinG" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#f8d6bf"/>
+              <stop offset="1" stop-color="#e8ad8d"/>
+            </linearGradient>
+            <linearGradient id="shineGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+              <stop offset="0.5" stop-color="#fff" stop-opacity="0.55"/>
+              <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+            <clipPath id="screenClip"><rect x="120" y="62" width="180" height="386" rx="26"/></clipPath>
+          </defs>
+
+          <ellipse cx="210" cy="478" rx="96" ry="10" fill="#d8182b" opacity="0.12"/>
+
+          <!-- celular desligado -->
+          <rect x="110" y="50" width="200" height="410" rx="36" fill="#26262a" stroke="#3d3d44" stroke-width="2"/>
+          <rect x="120" y="62" width="180" height="386" rx="26" fill="url(#scr)"/>
+          <rect x="185" y="72" width="50" height="12" rx="6" fill="#141416"/>
+
+          <g clip-path="url(#screenClip)">
+            <polygon points="120,62 205,62 120,190" fill="#fff" opacity="0.05"/>
+            <polygon points="226,448 300,448 300,360" fill="#fff" opacity="0.03"/>
+
+            <!-- cacos de vidro -->
+            <g class="shards" fill="#fff">
+              <polygon points="196,236 172,210 176,182 204,200" opacity="0.10"/>
+              <polygon points="196,236 224,212 220,186 204,200" opacity="0.05"/>
+              <polygon points="196,236 240,238 226,262" opacity="0.12"/>
+              <polygon points="196,236 226,262 222,292 192,280" opacity="0.06"/>
+              <polygon points="196,236 192,280 170,298 164,266" opacity="0.11"/>
+              <polygon points="196,236 164,266 158,240" opacity="0.05"/>
+              <polygon points="172,210 150,160 176,182" opacity="0.09"/>
+              <polygon points="248,164 220,186 224,212" opacity="0.08"/>
+              <polygon points="226,262 252,316 222,292" opacity="0.09"/>
+              <polygon points="170,298 142,322 192,280" opacity="0.07"/>
+              <polygon points="204,200 194,168 176,182" opacity="0.06"/>
+              <polygon points="192,280 204,316 222,292" opacity="0.05"/>
+            </g>
+
+            <!-- rachaduras -->
+            <g class="cracks">
+              <path class="crack cA" pathLength="1" d="M196 236 L172 210 L176 182 L150 160 L152 128 L132 104 L124 88"/>
+              <path class="crack cC" pathLength="1" d="M196 236 L204 200 L194 168 L206 134 L198 100 L204 70"/>
+              <path class="crack cB" pathLength="1" d="M196 236 L224 212 L220 186 L248 164 L246 130 L268 108 L282 84"/>
+              <path class="crack cA" pathLength="1" d="M196 236 L240 238 L262 224 L292 230"/>
+              <path class="crack cC" pathLength="1" d="M196 236 L226 262 L222 292 L252 316 L250 350 L276 372 L288 400"/>
+              <path class="crack cB" pathLength="1" d="M196 236 L192 280 L204 316 L190 350 L200 390 L194 436"/>
+              <path class="crack cA" pathLength="1" d="M196 236 L164 266 L170 298 L142 322 L146 360 L124 388 L128 430"/>
+              <path class="crack cC" pathLength="1" d="M196 236 L158 240 L140 226 L124 232"/>
+
+              <path class="crack thin cA" pathLength="1" d="M178 214 L200 208 L216 220 L222 246 L206 262 L182 258 L170 240 Z"/>
+              <path class="crack thin cB" pathLength="1" d="M150 184 L196 168 L238 184 L256 232 L240 280 L196 300 L152 286 L136 236 Z"/>
+              <path class="crack thin cC" pathLength="1" d="M140 140 L206 118 L268 150 L282 226 L270 300 L240 352 L180 372 L130 340 L118 280"/>
+
+              <path class="crack thin cB" pathLength="1" d="M172 210 L146 214 L128 206"/>
+              <path class="crack thin cA" pathLength="1" d="M176 182 L204 176"/>
+              <path class="crack thin cC" pathLength="1" d="M224 212 L246 200 L268 204"/>
+              <path class="crack thin cB" pathLength="1" d="M222 292 L196 304 L176 330"/>
+              <path class="crack thin cA" pathLength="1" d="M170 298 L150 280 L132 284"/>
+              <path class="crack thin cC" pathLength="1" d="M252 316 L270 300 L292 304"/>
+
+              <path class="crack thin cB" pathLength="1" d="M150 380 L130 360"/>
+              <path class="crack thin cB" pathLength="1" d="M150 380 L174 366 L190 372"/>
+              <path class="crack thin cB" pathLength="1" d="M150 380 L146 410"/>
+              <path class="crack thin cB" pathLength="1" d="M150 380 L170 398 L186 420"/>
+              <path class="crack thin cA" pathLength="1" d="M270 92 L250 100 L238 94"/>
+              <path class="crack thin cA" pathLength="1" d="M270 92 L284 112"/>
+              <path class="crack thin cA" pathLength="1" d="M270 92 L262 76"/>
+            </g>
+
+            <rect class="shine" x="0" y="62" width="60" height="386" fill="url(#shineGrad)"/>
+          </g>
+
+          <g class="ok">
+            <circle cx="210" cy="255" r="40" fill="#fff"/>
+            <path d="M191 256 L205 270 L231 240" fill="none" stroke="#d8182b" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+
+          <!-- estrelinhas da comemoração -->
+          <g aria-hidden="true">
+            <g transform="translate(86 130)"><path class="star" fill="#d8182b" d="M0 -12 L3 -3 L12 0 L3 3 L0 12 L-3 3 L-12 0 L-3 -3 Z"/></g>
+            <g transform="translate(338 118) scale(0.8)"><path class="star b" fill="#f26b78" d="M0 -12 L3 -3 L12 0 L3 3 L0 12 L-3 3 L-12 0 L-3 -3 Z"/></g>
+            <g transform="translate(76 340) scale(0.7)"><path class="star c" fill="#f26b78" d="M0 -12 L3 -3 L12 0 L3 3 L0 12 L-3 3 L-12 0 L-3 -3 Z"/></g>
+            <g transform="translate(346 330) scale(1.1)"><path class="star d" fill="#d8182b" d="M0 -12 L3 -3 L12 0 L3 3 L0 12 L-3 3 L-12 0 L-3 -3 Z"/></g>
+            <g transform="translate(210 28) scale(0.9)"><path class="star b" fill="#d8182b" d="M0 -12 L3 -3 L12 0 L3 3 L0 12 L-3 3 L-12 0 L-3 -3 Z"/></g>
+            <g transform="translate(356 230) scale(0.6)"><path class="star c" fill="#f26b78" d="M0 -12 L3 -3 L12 0 L3 3 L0 12 L-3 3 L-12 0 L-3 -3 Z"/></g>
+          </g>
+
+          <!-- mão com chave de fenda -->
+          <g class="hand">
+            <g transform="translate(196 236) rotate(-35) scale(1.7)">
+              <path d="M-22 134 L22 134 L18 184 L-18 184 Z" fill="url(#skinG)" stroke="#cf9370" stroke-width="1.3" stroke-linejoin="round"/>
+              <rect x="-27" y="172" width="54" height="330" rx="8" fill="#d8182b"/>
+              <rect x="-27" y="172" width="54" height="14" fill="#fff"/>
+
+              <rect x="-3.5" y="0" width="7" height="6" fill="#9aa2b0"/>
+              <rect x="-2.5" y="0" width="5" height="92" fill="#c5cbd5" stroke="#8d95a3" stroke-width="0.8"/>
+              <rect x="-12" y="68" width="24" height="76" rx="11" fill="#fff" stroke="#e5c7c5" stroke-width="1.2"/>
+              <rect x="-12" y="76" width="24" height="6" fill="#d8182b"/>
+
+              <rect x="-27" y="84" width="54" height="60" rx="14" fill="url(#skinG)"/>
+              <g fill="url(#skinG)" stroke="#cf9370" stroke-width="1.3">
+                <rect x="-30" y="82" width="58" height="17" rx="8.5"/>
+                <rect x="-32" y="97" width="60" height="17" rx="8.5"/>
+                <rect x="-30" y="112" width="58" height="17" rx="8.5"/>
+                <rect x="-26" y="127" width="52" height="16" rx="8"/>
+              </g>
+              <g fill="none" stroke="#cf9370" stroke-width="1.2" stroke-linecap="round">
+                <path d="M-9 86.5 Q-11 90.5 -9 94.5"/>
+                <path d="M-9 101.5 Q-11 105.5 -9 109.5"/>
+                <path d="M-9 116.5 Q-11 120.5 -9 124.5"/>
+                <path d="M-9 131 Q-11 135 -9 139"/>
+              </g>
+              <g transform="rotate(-14 17 86)">
+                <rect x="8" y="62" width="19" height="48" rx="9.5" fill="url(#skinG)" stroke="#cf9370" stroke-width="1.3"/>
+                <ellipse cx="17.5" cy="69" rx="5.5" ry="5" fill="#fbe3d6" stroke="#cf9370" stroke-width="0.9"/>
+              </g>
+            </g>
+          </g>
+
+          <g fill="#fff">
+            <circle class="spark" cx="210" cy="224" r="3.5"/>
+            <circle class="spark" cx="182" cy="246" r="3"/>
+            <circle class="spark" cx="206" cy="252" r="2.5"/>
+          </g>
+        </svg>
+        <p class="caption" aria-hidden="true">
+          <span class="capA">Tela quebrada</span>
+          <span class="capB">Consertando</span>
+          <span class="capC">Tela como nova</span>
+        </p>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-main" href="https://wa.me/5515998069904?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Nino%20Cell." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.4A8.5 8.5 0 1 1 21 12z"/></svg>
+          Chamar no WhatsApp
+        </a>
+        <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&query=R.+do+Com%C3%A9rcio%2C+182%2C+Centro%2C+Tiet%C3%AA%2C+SP%2C+18530-000" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          Como chegar
+        </a>
+      </div>
+          </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="track">
+      <div class="grp"><span>Troca de tela</span><span>Troca de bateria</span><span>Conector de carga</span><span>Capinhas</span><span>Películas</span><span>Carregadores</span><span>Fones de ouvido</span><span>Cabos</span></div>
+      <div class="grp"><span>Troca de tela</span><span>Troca de bateria</span><span>Conector de carga</span><span>Capinhas</span><span>Películas</span><span>Carregadores</span><span>Fones de ouvido</span><span>Cabos</span></div>
+      <div class="grp"><span>Troca de tela</span><span>Troca de bateria</span><span>Conector de carga</span><span>Capinhas</span><span>Películas</span><span>Carregadores</span><span>Fones de ouvido</span><span>Cabos</span></div>
+      <div class="grp"><span>Troca de tela</span><span>Troca de bateria</span><span>Conector de carga</span><span>Capinhas</span><span>Películas</span><span>Carregadores</span><span>Fones de ouvido</span><span>Cabos</span></div>
+    </div>
+  </div>
+
+  <section class="band band-soft" id="servicos">
+    <div class="wrap">
+      <p class="label">Oficina</p>
+      <h2 class="h2">Reparos para o seu celular</h2>
+      <p class="sub">Traga o aparelho e veja o que ele precisa. Os problemas mais comuns são resolvidos na própria oficina.</p>
+      <div class="cards">
+        <article class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 7l2 3.5-2.5 2.5 2 4"/></svg></div>
+          <h3>Troca de tela</h3>
+          <p>Tela trincada, manchada ou sem imagem.</p>
+        </article>
+        <article class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="16" height="10" rx="2.5"/><path d="M21.5 10.5v3"/><path d="M11.5 9.5l-2.5 3h4l-2.5 3"/></svg></div>
+          <h3>Troca de bateria</h3>
+          <p>Celular que descarrega rápido ou desliga sozinho.</p>
+        </article>
+        <article class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2.5v4M15 2.5v4"/><path d="M6 6.5h12v4a6 6 0 0 1-12 0z"/><path d="M12 16.5v5"/></svg></div>
+          <h3>Conector de carga</h3>
+          <p>Cabo que não encaixa ou carga que falha.</p>
+        </article>
+        <article class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 9a4 4 0 0 1 0 6"/><path d="M19 6.5a8 8 0 0 1 0 11"/></svg></div>
+          <h3>Som e microfone</h3>
+          <p>Alto-falante baixo, chiado ou voz que não é ouvida.</p>
+        </article>
+      </div>
+      <p class="nota">Outro defeito? <a href="https://wa.me/5515998069904?text=Ol%C3%A1!%20Meu%20celular%20est%C3%A1%20com%20um%20defeito." target="_blank" rel="noopener">Conte pelo WhatsApp</a>.</p>
+    </div>
+  </section>
+
+  <section class="band" id="acessorios">
+    <div class="wrap">
+      <p class="label">Loja</p>
+      <h2 class="h2">Acessórios em geral</h2>
+      <p class="sub">Tudo para o dia a dia do seu celular. Diga o modelo do aparelho e a gente separa o que serve.</p>
+      <div class="chips">
+        <span class="chip">Capinhas</span>
+        <span class="chip">Películas</span>
+        <span class="chip">Carregadores</span>
+        <span class="chip">Cabos</span>
+        <span class="chip">Fones de ouvido</span>
+        <span class="chip">Suportes</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave" aria-hidden="true"></div>
+  <section class="band band-red" id="contato">
+    <div class="wrap">
+      <p class="label">Contato</p>
+      <h2 class="h2">Venha até a Nino Cell</h2>
+      <div class="ficha">
+        <div class="linha">
+          <span class="label">Endereço</span>
+          <p class="valor">R. do Comércio, 182, Centro<br>Tietê/SP, 18530-000</p>
+        </div>
+        <div class="linha">
+          <span class="label">Código de localização</span>
+          <p class="valor">W72M+P6 Tietê, São Paulo</p>
+        </div>
+        <div class="linha">
+          <span class="label">Telefone e WhatsApp</span>
+          <p class="valor" id="fone">(15) 99806-9904</p>
+          <button class="copiar" id="copiar" type="button">Copiar número</button>
+        </div>
+        <div class="linha">
+          <span class="label">Instagram</span>
+          <p class="valor"><a href="https://www.instagram.com/nino_cell_/" target="_blank" rel="noopener">@nino_cell_</a></p>
+        </div>
+        <div class="linha">
+          <span class="label">Horário</span>
+          <p class="valor">Confirme o horário de hoje pelo WhatsApp</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-main" href="https://wa.me/5515998069904?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Nino%20Cell." target="_blank" rel="noopener">Chamar no WhatsApp</a>
+          <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&query=R.+do+Com%C3%A9rcio%2C+182%2C+Centro%2C+Tiet%C3%AA%2C+SP%2C+18530-000" target="_blank" rel="noopener">Abrir no mapa</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<a class="wa" href="https://wa.me/5515998069904?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Nino%20Cell." target="_blank" rel="noopener" aria-label="Chamar no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.4A8.5 8.5 0 1 1 21 12z"/></svg>
+</a>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Nino Cell. Oficina de reparos de celulares e acessórios. Tietê/SP.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var alvos = document.querySelectorAll('.band .label, .band .h2, .band .sub, .card, .chip, .nota, .ficha');
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+    alvos.forEach(function (el, i) {
+      el.style.setProperty('--d', ((i % 4) * 0.08) + 's');
+      io.observe(el);
+    });
+  }
+  var btn = document.getElementById('copiar');
+  var fone = document.getElementById('fone');
+  if (btn && fone) {
+    btn.addEventListener('click', function () {
+      var original = 'Copiar número';
+      function feito(msg) {
+        btn.textContent = msg;
+        setTimeout(function () { btn.textContent = original; }, 2200);
+      }
+      function selecionar() {
+        try {
+          var r = document.createRange();
+          r.selectNodeContents(fone);
+          var s = window.getSelection();
+          s.removeAllRanges();
+          s.addRange(r);
+        } catch (e) {}
+        feito('Número selecionado, copie');
+      }
+      try {
+        navigator.clipboard.writeText('(15) 99806-9904').then(function () {
+          feito('Número copiado');
+        }, selecionar);
+      } catch (e) {
+        selecionar();
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>
